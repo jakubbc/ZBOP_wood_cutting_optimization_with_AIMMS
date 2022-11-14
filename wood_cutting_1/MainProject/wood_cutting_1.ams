@@ -1,0 +1,164 @@
+## ams_version=1.0
+
+Model Main_wood_cutting_1 {
+	Set szerokosci {
+		Index: s;
+		Definition: data {S1, S2, S3, S4};
+	}
+	Set grubosci {
+		Index: g;
+		Definition: data { G1, G2, G3 };
+	}
+	Parameter t {
+		IndexDomain: g;
+		InitialData: data { G1 : 10,  G2 : 20,  G3 : 30 };
+	}
+	Parameter w {
+		IndexDomain: s;
+		InitialData: data { S1 : 20,  S2 : 25,  S3 : 30,  S4 : 35 };
+	}
+	Parameter C {
+		IndexDomain: (g,s);
+		InitialData: data { ( G3, S3 ) : 10,  ( G3, S4 ) : 100 };
+	}
+	Parameter minG {
+		Text: "minimalna grubosc deski wystepujaca w problemie";
+		Definition: {
+			min(g, t(g));
+		}
+	}
+	Parameter minS {
+		Definition: {
+			min(s, w(s));
+		}
+	}
+	Parameter R {
+		Definition: {
+			50;
+		}
+	}
+	Set paski_1_etap {
+		Index: n, i;
+		Definition: {
+			ElementRange(1, 2 * Ceil(2 * R / minG) - 1);
+		}
+	}
+	Set deski_2_etap {
+		Index: m;
+		Definition: {
+			ElementRange(1, Ceil(2 * R / minS));
+		}
+	}
+	Variable a {
+		IndexDomain: n;
+		Range: nonnegative;
+	}
+	Variable b {
+		IndexDomain: n;
+		Range: nonnegative;
+	}
+	Variable d {
+		IndexDomain: (n,m);
+		Range: nonnegative;
+	}
+	Variable y {
+		IndexDomain: (n,m,g,s);
+		Range: binary;
+	}
+	Variable przychod {
+		Range: free;
+		Definition: sum((n, m, g, s), y(n, m, g, s) * C(g,s));
+	}
+	Constraint ct_suma_grubosci_1_etap {
+		Definition: sum(n, a(n)) <= 2*R;
+	}
+	Constraint ct_suma_szerokosci_2_etap {
+		IndexDomain: n;
+		Definition: sum(m, d(n,m)) <= b(n);
+	}
+	Constraint ct_pasek_dosc_gruby {
+		IndexDomain: (n,m,g,s);
+		Definition: y(n,m,g,s) <= a(n)/t(g);
+	}
+	Constraint ct_deska_dosc_szeroka {
+		IndexDomain: (n,m,g,s);
+		Definition: y(n,m,g,s) <= d(n,m)/w(s);
+	}
+	Constraint ct_kazda_deska_jedna_grubosc {
+		IndexDomain: (n,m);
+		Definition: sum((g,s), y(n,m,g,s)) <= 1;
+	}
+	Constraint ct_szerokosc_paska_1 {
+		IndexDomain: n;
+		Definition: {
+			b(n) <= 2 * sqrt(sqr(R) - sqr(sum(i | i<n, a(i)) - R))
+			!b(n) = 2*R
+		}
+	}
+	Constraint ct_szerokosc_paska_2 {
+		IndexDomain: n;
+		Definition: {
+			b(n) <= 2 * sqrt(sqr(R) - sqr(sum(i | i<=n, a(i)) - R))
+			!1=1
+		}
+	}
+	MathematicalProgram find_max_przychod {
+		Objective: przychod;
+		Direction: maximize;
+		Constraints: AllConstraints;
+		Variables: AllVariables;
+		Type: Automatic;
+	}
+	Procedure MainInitialization {
+		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
+	}
+	Procedure PostMainInitialization {
+		Comment: {
+			"Add initialization statements here that require that the libraries are already initialized properly,
+			or add statements that require the Data Management module to be initialized."
+		}
+	}
+	Procedure MainExecution {
+		Body: {
+			solve find_max_przychod;
+		}
+	}
+	Procedure PreMainTermination {
+		Body: {
+			return DataManagementExit();
+		}
+		Comment: {
+			"Add termination statements here that require all libraries to be still alive.
+			Return 1 if you allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence."
+		}
+	}
+	Procedure MainTermination {
+		Body: {
+			return 1;
+		}
+		Comment: {
+			"Add termination statements here that do not require all libraries to be still alive.
+			Return 1 to allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence.
+			It is recommended to only use the procedure PreMainTermination to cancel the termination sequence and let this procedure always return 1."
+		}
+	}
+	Section Quantities_and_Units {
+		Comment: {
+			"This section contains all the units and quantities that are added automatically by AIMMS.
+			It is recommended to declare all your quantities here."
+		}
+		Quantity SI_Time_Duration {
+			BaseUnit: s;
+			Conversions: minute->s : #-># * 60;
+			Comment: {
+				"Expresses the value for the duration of periods.
+				
+				The unit s has been added automatically because it is a required unit for AimmsWebUI.
+				
+				The unit minute has been added automatically because it is a required unit for AimmsWebUI."
+			}
+		}
+	}
+}
