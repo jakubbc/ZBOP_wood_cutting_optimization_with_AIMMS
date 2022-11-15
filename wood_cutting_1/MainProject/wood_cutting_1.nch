@@ -1,0 +1,10 @@
+* The timestamps in this namechange file are stored in Coordinated universal time (UTC).
+"test_set" "N" "2022-11-14 14:39:10"
+"n" "Nasd" "2022-11-14 14:39:58"
+"Nasd" "paski_1_etap" "2022-11-14 14:45:32"
+"zysk" "przychod" "2022-11-14 15:44:44"
+"Copy_ct_szerokosc_paska_1" "ct_szerokosc_paska_2" "2022-11-14 16:41:18"
+"ct_szerokosc_paska_1" "ct_szerokosc_paska_1_1" "2022-11-15 16:49:53"
+"Copy_ct_szerokosc_paska_1_1" "ct_szerokosc_paska_1_2" "2022-11-15 16:50:09"
+"ct_szerokosc_paska_2" "ct_szerokosc_paska_2_1" "2022-11-15 16:51:38"
+"Copy_ct_szerokosc_paska_2_1" "ct_szerokosc_paska_2_2" "2022-11-15 16:52:20"
