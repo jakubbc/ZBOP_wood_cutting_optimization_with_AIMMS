@@ -12,16 +12,16 @@ Model Main_wood_cutting_1 {
 	Parameter t {
 		IndexDomain: g;
 		Range: integer;
-		InitialData: data { G1 : 10,  G2 : 20};
+		InitialData: data { G1 : 30,  G2 : 40};
 	}
 	Parameter w {
 		IndexDomain: s;
 		Range: integer;
-		InitialData: data { S1 : 20,  S2 : 25,  S3 : 30};
+		InitialData: data { S1 : 200,  S2 : 250,  S3 : 300};
 	}
 	Parameter C {
 		IndexDomain: (g,s);
-		InitialData: data { ( G2, S2 ) : 10,  ( G2, S3 ) : 100 };
+		InitialData: data { ( G1, S1 ) : 10,  ( G1, S2 ) : 20,  ( G2, S2 ) : 30,  ( G2, S3 ) : 100 };
 	}
 	Parameter minG {
 		Text: "minimalna grubosc deski wystepujaca w problemie";
@@ -36,19 +36,19 @@ Model Main_wood_cutting_1 {
 	}
 	Parameter R {
 		InitialData: {
-			60;
+			140;
 		}
 	}
 	Set paski_1_etap {
 		Index: n, i;
 		Definition: {
-			ElementRange(1, 2 * Ceil(2 * R / minG) - 1);
+			ElementRange(1, Floor(2 * R / minG));
 		}
 	}
 	Set deski_2_etap {
 		Index: m;
 		Definition: {
-			ElementRange(1, Ceil(2 * R / minS));
+			ElementRange(1, Floor(2 * R / minS));
 		}
 	}
 	Variable a {
@@ -62,6 +62,11 @@ Model Main_wood_cutting_1 {
 	Variable d {
 		IndexDomain: (n,m);
 		Range: nonnegative;
+	}
+	Variable e {
+		IndexDomain: n;
+		Range: free;
+		Definition: sum(i | i<n, a(i));
 	}
 	Variable y {
 		IndexDomain: (n,m,g,s);
@@ -101,12 +106,13 @@ Model Main_wood_cutting_1 {
 			!b(n) <= 2 * sqrt(sqr(R) - sqr(sum(i | i<n, a(i)) - R))
 			!b(n) <= 2 * sqrt(2*R*sum(i | i<n, a(i)) - sqr(sum(i | i<n, a(i))))
 			!b(n) = 2*R
-			b(n) <= 2 * sum(i | i<n, a(i))
+			!b(n) <= 2 * sum(i | i<n, a(i))
+			b(n) <= 2 * e(n)
 		}
 	}
 	Constraint ct_szerokosc_paska_1_2 {
 		IndexDomain: n;
-		Definition: b(n) <= 4 * R - 2 * sum(i | i<n, a(i));
+		Definition: b(n) <= 4 * R - 2 * e(n);
 	}
 	Constraint ct_szerokosc_paska_2_1 {
 		IndexDomain: n;
@@ -114,12 +120,12 @@ Model Main_wood_cutting_1 {
 			!b(n) <= 2 * sqrt(sqr(R) - sqr(sum(i | i<=n, a(i)) - R))
 			!b(n) <= 2 * sqrt(2*R*sum(i | i<=n, a(i)) - sqr(sum(i | i<=n, a(i))))
 			!1=1
-			b(n) <= 2 * sum(i | i<=n, a(i))
+			b(n) <= 2 * (e(n) + a(n))
 		}
 	}
 	Constraint ct_szerokosc_paska_2_2 {
 		IndexDomain: n;
-		Definition: b(n) <= 4 * R - 2 * sum(i | i<=n, a(i));
+		Definition: b(n) <= 4 * R - 2 * (e(n) + a(n));
 	}
 	MathematicalProgram find_max_przychod {
 		Objective: przychod;

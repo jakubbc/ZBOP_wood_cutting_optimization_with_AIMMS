@@ -1,17 +1,16 @@
-﻿There is 94.492 Mb in use.
-Warning: After 2123705 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 1210.
+﻿There is 95.676 Mb in use.
+Warning: After 455304 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
+The maximum found for przychod is 560.
 Warning at line 1 in user-defined function section "MainExecution":
-After 2123705 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 1210.
-Warning: After 2343298 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 120.
+After 455304 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
+The maximum found for przychod is 560.
+Warning: After 12947356 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
+The maximum found for przychod is 620.
 Warning at line 1 in user-defined function section "MainExecution":
-After 2343298 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 120.
-Division by zero error with 130 / 0.
-Warning: After 22607652 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 270.
+After 12947356 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
+The maximum found for przychod is 620.
+Warning: After 3891066 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
+The maximum found for przychod is 790.
 Warning at line 1 in user-defined function section "MainExecution":
-After 22607652 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 270.
+After 3891066 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
+The maximum found for przychod is 790.
