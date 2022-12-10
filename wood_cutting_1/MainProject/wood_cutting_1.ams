@@ -98,6 +98,7 @@ Model Main_wood_cutting_1 {
 	}
 	Constraint ct_kazda_deska_jedna_grubosc {
 		IndexDomain: (n,m);
+		Property: Sos1;
 		Definition: sum((g,s), y(n,m,g,s)) <= 1;
 	}
 	Constraint ct_szerokosc_paska_1_1 {
