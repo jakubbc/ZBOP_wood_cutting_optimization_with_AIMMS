@@ -1,37 +1,33 @@
 ## ams_version=1.0
 
 Model Main_wood_cutting_1 {
-	Set grubosci {
-		Index: g;
-		Definition: data { G1, G2};
-	}
-	Set szerokosci {
-		Index: s;
-		Definition: data {S1, S2, S3};
+	Set deski {
+		Index: p;
+		Definition: data { P1, P2};
 	}
 	Parameter t {
-		IndexDomain: g;
+		IndexDomain: p;
 		Range: integer;
-		InitialData: data { G1 : 30,  G2 : 40};
+		InitialData: data { P1 : 30,  P2 : 40};
 	}
 	Parameter w {
-		IndexDomain: s;
+		IndexDomain: p;
 		Range: integer;
-		InitialData: data { S1 : 200,  S2 : 250,  S3 : 300};
+		InitialData: data { P1 : 200,  P2 : 250};
 	}
 	Parameter C {
-		IndexDomain: (g,s);
-		InitialData: data { ( G1, S1 ) : 10,  ( G1, S2 ) : 20,  ( G2, S2 ) : 30,  ( G2, S3 ) : 100 };
+		IndexDomain: p;
+		InitialData: data { P1 : 10,  P2 : 20 };
 	}
 	Parameter minG {
 		Text: "minimalna grubosc deski wystepujaca w problemie";
 		Definition: {
-			min(g, t(g));
+			min(p, t(p));
 		}
 	}
 	Parameter minS {
 		Definition: {
-			min(s, w(s));
+			min(p, w(p));
 		}
 	}
 	Parameter R {
@@ -53,11 +49,11 @@ Model Main_wood_cutting_1 {
 	}
 	Variable a {
 		IndexDomain: n;
-		Range: nonnegative;
+		Range: integer;
 	}
 	Variable b {
 		IndexDomain: n;
-		Range: nonnegative;
+		Range: integer;
 	}
 	Variable d {
 		IndexDomain: (n,m);
@@ -69,17 +65,17 @@ Model Main_wood_cutting_1 {
 		Definition: sum(i | i<n, a(i));
 	}
 	Variable y {
-		IndexDomain: (n,m,g,s);
+		IndexDomain: (n,m,p);
 		Range: binary;
 	}
 	Variable przychod {
 		Range: free;
-		Definition: sum((n, m, g, s), y(n, m, g, s) * C(g,s));
+		Definition: sum((n, m, p), y(n, m, p) * C(p));
 	}
 	Variable licznosc_desek {
-		IndexDomain: (g,s);
-		Range: free;
-		Definition: sum((n, m), y(n,m,g,s));
+		IndexDomain: p;
+		Range: integer;
+		Definition: sum((n, m), y(n,m,p));
 	}
 	Constraint ct_suma_grubosci_1_etap {
 		Definition: sum(n, a(n)) <= 2*R;
@@ -89,16 +85,17 @@ Model Main_wood_cutting_1 {
 		Definition: sum(m, d(n,m)) <= b(n);
 	}
 	Constraint ct_pasek_dosc_gruby {
-		IndexDomain: (n,m,g,s);
-		Definition: y(n,m,g,s) <= a(n)/t(g);
+		IndexDomain: (n,m,p);
+		Definition: y(n,m,p) <= a(n)/t(p);
 	}
 	Constraint ct_deska_dosc_szeroka {
-		IndexDomain: (n,m,g,s);
-		Definition: y(n,m,g,s) <= d(n,m)/w(s);
+		IndexDomain: (n,m,p);
+		Definition: y(n,m,p) <= d(n,m)/w(p);
 	}
 	Constraint ct_kazda_deska_jedna_grubosc {
 		IndexDomain: (n,m);
-		Definition: sum((g,s), y(n,m,g,s)) <= 1;
+		Property: Sos1;
+		Definition: sum((p), y(n,m,p)) <= 1;
 	}
 	Constraint ct_szerokosc_paska_1_1 {
 		IndexDomain: n;
@@ -132,7 +129,7 @@ Model Main_wood_cutting_1 {
 		Direction: maximize;
 		Constraints: AllConstraints;
 		Variables: AllVariables;
-		Type: Automatic;
+		Type: MIP;
 	}
 	Procedure MainInitialization {
 		Comment: "Add initialization statements here that do NOT require any library being initialized already.";

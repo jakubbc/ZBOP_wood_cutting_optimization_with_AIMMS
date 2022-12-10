@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<MPILayout>
+	<RelativePosition What="Constraint Solution|Col1" RelativeSize="20" />
+	<RelativePosition What="Constraint Solution|Col10" RelativeSize="20" />
+	<RelativePosition What="Constraint Solution|Col12" RelativeSize="20" />
+	<RelativePosition What="Constraint Solution|Col4" RelativeSize="20" />
+	<RelativePosition What="Constraint Solution|Col8" RelativeSize="20" />
+	<RelativePosition What="Constraint Statistics|BottomCol1" RelativeSize="25" />
+	<RelativePosition What="Constraint Statistics|BottomCol2" RelativeSize="25" />
+	<RelativePosition What="Constraint Statistics|BottomCol3" RelativeSize="25" />
+	<RelativePosition What="Constraint Statistics|BottomCol4" RelativeSize="25" />
+	<RelativePosition What="Constraint Statistics|Col1" RelativeSize="50" />
+	<RelativePosition What="Constraint Statistics|Col2" RelativeSize="50" />
+	<RelativePosition What="Constraint Statistics|Divider1" RelativeSize="50" />
+	<RelativePosition What="Constraint Statistics|Divider2" RelativeSize="50" />
+	<RelativePosition What="Constraint Statistics|Divider3" RelativeSize="33" />
+	<RelativePosition What="MIP Search Tree|Slider" RelativeSize="50" />
+	<RelativePosition What="MainMPI|HorizontalDivider" RelativeSize="50" />
+	<RelativePosition What="MainMPI|VerticalDivider" RelativeSize="50" />
+	<RelativePosition What="Math Program Solution|Col1" RelativeSize="50" />
+	<RelativePosition What="Math Program Solution|Col2" RelativeSize="50" />
+	<RelativePosition What="Math Program Solution|Divider" RelativeSize="50" />
+	<RelativePosition What="Matrix Statistics|Col1" RelativeSize="50" />
+	<RelativePosition What="Matrix Statistics|Col2" RelativeSize="50" />
+	<RelativePosition What="Scaling Factors|Divider" RelativeSize="50" />
+	<RelativePosition What="Variable Statistics|BottomCol1" RelativeSize="25" />
+	<RelativePosition What="Variable Statistics|BottomCol2" RelativeSize="25" />
+	<RelativePosition What="Variable Statistics|BottomCol3" RelativeSize="25" />
+	<RelativePosition What="Variable Statistics|BottomCol4" RelativeSize="25" />
+	<RelativePosition What="Variable Statistics|Col1" RelativeSize="50" />
+	<RelativePosition What="Variable Statistics|Col2" RelativeSize="50" />
+	<RelativePosition What="Variable Statistics|Divider" RelativeSize="50" />
+</MPILayout>

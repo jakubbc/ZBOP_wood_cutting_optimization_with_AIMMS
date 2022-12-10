@@ -1,16 +1,16 @@
-﻿There is 95.676 Mb in use.
-Warning: After 455304 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 560.
-Warning at line 1 in user-defined function section "MainExecution":
-After 455304 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 560.
-Warning: After 12947356 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 620.
-Warning at line 1 in user-defined function section "MainExecution":
-After 12947356 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 620.
-Warning: After 3891066 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 790.
-Warning at line 1 in user-defined function section "MainExecution":
-After 3891066 iterations CPLEX 22.1 found an integer solution to find_max_przychod.
-The maximum found for przychod is 790.
+﻿There is 95.910 Mb in use.
+The element 'P3' is not in the domain set "deski".
+Warning: The string parameter "pro::PROEndPoint" is not initialized (default values are used).
+Warning at line 1 in user-defined function section "pro::GetPROEndPoint":
+The string parameter "pro::PROEndPoint" is not initialized (default values are used).
+Warning: The string parameter "pro::ModelName" is not initialized (default values are used).
+Warning at line 4 in user-defined function section "webui::GetCaseStorageServerPath":
+The string parameter "pro::ModelName" is not initialized (default values are used).
+Warning: The string parameter "pro::PROEnvironment" is not initialized (default values are used).
+Warning at line 4 in user-defined function section "webui::GetCaseStorageServerPath":
+The string parameter "pro::PROEnvironment" is not initialized (default values are used).
+Warning: The string parameter "pro::PROUserName" is not initialized (default values are used).
+Warning at line 4 in user-defined function section "webui::GetCaseStorageServerPath":
+The string parameter "pro::PROUserName" is not initialized (default values are used).
+Warning at line 4 in user-defined function section "pro::LibraryTermination":
+The string parameter "pro::ModelDLLPath" is not initialized (default values are used).

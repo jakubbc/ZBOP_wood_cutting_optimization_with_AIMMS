@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Page Version="4000" TimeStamp="2022-11-16 13:47:29">
+<Page Version="4000" TimeStamp="2022-11-15 16:52:22">
 	<PageEditSize Type="Inherited" />
 	<ProjectUUID>1B22538F-3DD8-4A61-A3B5-1E97ADE014DA</ProjectUUID>
 	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
@@ -12,9 +12,9 @@
 		<BackgroundColor RGB="#ffffff" />
 		<RowIndentation>3</RowIndentation>
 		<ExplicitIdentifier>
-			<Identifier>C( g, s )</Identifier>
+			<Identifier>C( p )</Identifier>
 			<FirstColumn>1</FirstColumn>
-			<NumberFormat Width="4" Decimals="0" Alignment="Right" />
+			<NumberFormat Width="5" Decimals="1" />
 		</ExplicitIdentifier>
 	</PageObject>
 	<PageObject Type="Button">
@@ -40,7 +40,7 @@
 		<BackgroundColor RGB="#ffffff" />
 		<RowIndentation>3</RowIndentation>
 		<ExplicitIdentifier>
-			<Identifier>t( g )</Identifier>
+			<Identifier>t( p )</Identifier>
 			<FirstColumn>1</FirstColumn>
 			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
 		</ExplicitIdentifier>
@@ -53,9 +53,9 @@
 		<BackgroundColor RGB="#ffffff" />
 		<RowIndentation>3</RowIndentation>
 		<ExplicitIdentifier>
-			<Identifier>w( s )</Identifier>
+			<Identifier>w( p )</Identifier>
 			<FirstColumn>1</FirstColumn>
-			<NumberFormat Width="4" Decimals="0" />
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
 		</ExplicitIdentifier>
 	</PageObject>
 	<PageObject Type="Scalar">
@@ -92,9 +92,9 @@
 		<BackgroundColor RGB="#ffffff" />
 		<RowIndentation>3</RowIndentation>
 		<ExplicitIdentifier>
-			<Identifier>licznosc_desek( g, s )</Identifier>
+			<Identifier>licznosc_desek( p )</Identifier>
 			<FirstColumn>1</FirstColumn>
-			<NumberFormat Width="3" Decimals="0" Alignment="Right" />
+			<NumberFormat Width="4" Decimals="0" />
 		</ExplicitIdentifier>
 	</PageObject>
 	<PageObject Type="Table">
@@ -132,8 +132,7 @@
 			<Symbol>przychod</Symbol>
 			<Symbol>licznosc_desek</Symbol>
 			<Symbol>MainExecution</Symbol>
-			<Symbol>g</Symbol>
-			<Symbol>s</Symbol>
+			<Symbol>p</Symbol>
 			<Symbol>n</Symbol>
 			<Symbol>m</Symbol>
 		</Model>
