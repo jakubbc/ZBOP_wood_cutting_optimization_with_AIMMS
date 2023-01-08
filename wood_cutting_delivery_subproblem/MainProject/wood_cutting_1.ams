@@ -1,0 +1,158 @@
+## ams_version=1.0
+
+Model Wood_distribution {
+	Set tartaki {
+		Index: t;
+		Definition: data { T1, T2};
+	}
+	Set wezly {
+		Index: w;
+		Definition: data {W1, W2, W3};
+	}
+	Set hurtownie {
+		Index: h;
+		Definition: data {H1, H2, H3};
+	}
+	Parameter produkcja {
+		IndexDomain: t;
+		Range: integer;
+		InitialData: data { T1 : 300,  T2 : 300};
+	}
+	Parameter zapotrzebowanie {
+		IndexDomain: h;
+		Range: integer;
+		InitialData: data { H1 : 200,  H2 : 200,  H3 : 200 };
+	}
+	Parameter przepustowosc_tartak_wezel {
+		IndexDomain: (t,w);
+		Definition: data { ( T1, W1 ) : 20,  ( T1, W2 ) : 20,  ( T1, W3 ) : 20,  ( T2, W1 ) : 20,  ( T2, W2 ) : 20,  ( T2, W3 ) : 20 };
+	}
+	Parameter dystans_tartak_wezel {
+		IndexDomain: (t,w);
+		Definition: data { ( T1, W1 ) : 25,  ( T1, W2 ) : 35,  ( T1, W3 ) : 45,  ( T2, W1 ) : 55,  ( T2, W2 ) : 56,  ( T2, W3 ) : 15 };
+	}
+	Parameter przepustowosc_wezel_hurtownia {
+		IndexDomain: (w,h);
+		Definition: {
+			data 
+			{ ( W1, H1 ) : 20,  ( W1, H2 ) : 20,  ( W1, H3 ) : 20,  ( W2, H1 ) : 20,  ( W2, H2 ) : 20,  ( W2, H3 ) : 20,  ( W3, H1 ) : 20,
+			  ( W3, H2 ) : 20,  ( W3, H3 ) : 20 }
+		}
+	}
+	Parameter dystans_wezel_hurtownia {
+		IndexDomain: (w,h);
+		Definition: {
+			data 
+			{ ( W1, H1 ) : 12,  ( W1, H2 ) : 13,  ( W1, H3 ) : 14,  ( W2, H1 ) : 15,  ( W2, H2 ) : 16,  ( W2, H3 ) : 17,  ( W3, H1 ) : 18,
+			  ( W3, H2 ) : 19,  ( W3, H3 ) : 20 }
+		}
+	}
+	Parameter ladownosc_transportu {
+		InitialData: {
+			100;
+		}
+	}
+	Parameter koszt_tona_per_kilometr {
+		InitialData: {
+			2;
+		}
+	}
+	Variable pelne_transporty_tartak_wezel {
+		IndexDomain: (t,w);
+		Range: nonnegative;
+	}
+	Variable pelne_transporty_wezel_hurtownia {
+		IndexDomain: (w,h);
+		Range: nonnegative;
+	}
+	Variable ladunek_ostatniego_tartak_wezel {
+		IndexDomain: (t,w);
+		Range: nonnegative;
+	}
+	Variable ladunek_ostatniego_wezel_hurtownia {
+		IndexDomain: (w,h);
+		Range: nonnegative;
+	}
+	Variable koszt {
+		Range: free;
+		Definition: {
+			(sum((t,w), pelne_transporty_tartak_wezel(t,w) * dystans_tartak_wezel(t,w)) *       ladownosc_transportu + sum((t,w), dystans_tartak_wezel(t,w) * ladunek_ostatniego_tartak_wezel(t,w)) +
+			sum((w,h), pelne_transporty_wezel_hurtownia(w,h) * dystans_wezel_hurtownia(w,h)) * ladownosc_transportu + sum((w,h), dystans_wezel_hurtownia(w,h) * ladunek_ostatniego_wezel_hurtownia(w,h))) * koszt_tona_per_kilometr
+		}
+	}
+	Constraint wydobycie_zuzycie {
+		IndexDomain: h;
+		Definition: sum(w, pelne_transporty_wezel_hurtownia(w,h)) * ladownosc_transportu + sum(w, ladunek_ostatniego_wezel_hurtownia(w,h)) = zapotrzebowanie(h);
+	}
+	Constraint transport_zuzycie {
+		IndexDomain: t;
+		Definition: sum(w, pelne_transporty_tartak_wezel(t,w)) * ladownosc_transportu + sum(w, ladunek_ostatniego_tartak_wezel(t,w)) = produkcja(t);
+	}
+	Constraint transporty_tarta_wezel {
+		IndexDomain: (t,w);
+		Definition: pelne_transporty_tartak_wezel(t,w) <= przepustowosc_tartak_wezel(t,w);
+	}
+	Constraint transport_wezel_hurtownia {
+		IndexDomain: (w,h);
+		Definition: pelne_transporty_wezel_hurtownia(w,h) <= przepustowosc_wezel_hurtownia(w,h);
+	}
+	MathematicalProgram find_min_koszt {
+		Objective: koszt;
+		Direction: minimize;
+		Constraints: AllConstraints;
+		Variables: AllVariables;
+		Type: Automatic;
+	}
+	Procedure MainInitialization {
+		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
+	}
+	Procedure PostMainInitialization {
+		Comment: {
+			"Add initialization statements here that require that the libraries are already initialized properly,
+			or add statements that require the Data Management module to be initialized."
+		}
+	}
+	Procedure MainExecution {
+		Body: {
+			solve find_min_koszt;
+		}
+	}
+	Procedure PreMainTermination {
+		Body: {
+			return DataManagementExit();
+		}
+		Comment: {
+			"Add termination statements here that require all libraries to be still alive.
+			Return 1 if you allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence."
+		}
+	}
+	Procedure MainTermination {
+		Body: {
+			return 1;
+		}
+		Comment: {
+			"Add termination statements here that do not require all libraries to be still alive.
+			Return 1 to allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence.
+			It is recommended to only use the procedure PreMainTermination to cancel the termination sequence and let this procedure always return 1."
+		}
+	}
+	Section Quantities_and_Units {
+		Comment: {
+			"This section contains all the units and quantities that are added automatically by AIMMS.
+			It is recommended to declare all your quantities here."
+		}
+		Quantity SI_Time_Duration {
+			BaseUnit: s;
+			Conversions: minute->s : #-># * 60;
+			Comment: {
+				"Expresses the value for the duration of periods.
+				
+				The unit s has been added automatically because it is a required unit for AimmsWebUI.
+				
+				The unit minute has been added automatically because it is a required unit for AimmsWebUI."
+			}
+		}
+	}
+}

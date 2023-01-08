@@ -1,0 +1,117 @@
+{
+  "version": "4.67.0",
+  "application": {
+    "aimms.widget.type": {
+      "literal": "application"
+    },
+    "browsername": {
+      "aimms": {
+        "contents": [
+          "webui::ClientBrowserName"
+        ]
+      }
+    },
+    "browsertimezone": {
+      "aimms": {
+        "contents": [
+          "webui::BrowserTimeZone"
+        ]
+      }
+    },
+    "defaults.upload.download.controls.show": {
+      "aimms": {
+        "contents": [
+          "minG"
+        ],
+        "slices": []
+      }
+    },
+    "ignoredst": {
+      "aimms": {
+        "contents": [
+          "webui::IgnoreDST"
+        ]
+      }
+    },
+    "theme.classic": {
+      "literal": "NOT_ALLOWED"
+    },
+    "timezone": {
+      "aimms": {
+        "contents": [
+          "webui::DisplayTimeZone"
+        ]
+      }
+    },
+    "timezone.dst.readonly": {
+      "aimms": {
+        "contents": [
+          "webui::DefaultDSTSettingForDisplayTimeZone"
+        ]
+      }
+    }
+  },
+  "pages/home": {
+    "aimms.widget.type": {
+      "literal": "pagev2-grid"
+    },
+    "bindings": {
+      "literal": [
+        {
+          "widgetUri": "asd",
+          "gridArea": "area-b",
+          "dndId": "Unassigned widgetsasd1"
+        },
+        {
+          "widgetUri": "ceny",
+          "gridArea": "area-a",
+          "dndId": "area-aceny0"
+        }
+      ]
+    },
+    "layoutId": {
+      "literal": "Layout1"
+    },
+    "widgets": {
+      "literal": [
+        {
+          "uri": "ceny",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "asd",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        }
+      ]
+    }
+  },
+  "widgets/asd": {
+    "aimms.widget.type": {
+      "literal": "list"
+    },
+    "name": {
+      "literal": "asd"
+    }
+  },
+  "widgets/ceny": {
+    "aimms.widget.type": {
+      "literal": "table"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "przepustowosc_tartak_wezel"
+        ]
+      }
+    },
+    "name": {
+      "literal": "ceny"
+    }
+  }
+}
