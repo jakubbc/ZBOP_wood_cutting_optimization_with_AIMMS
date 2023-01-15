@@ -1,0 +1,118 @@
+## ams_version=1.0
+
+Model Main_wood_cutting_waste_usage_subproblem {
+	MathematicalProgram find_max_zysk {
+		Objective: zysk;
+		Direction: maximize;
+		Constraints: AllConstraints;
+		Variables: AllVariables;
+		Type: Automatic;
+	}
+	Constraint ct_sprzedany_przetworzony {
+		IndexDomain: j;
+		Definition: sum((k), y(j,k)) = sum((i), x(i,j)*e(i,j));
+	}
+	Constraint ct_przetworzone_odpady_mniejsze_niz_wyprodukowane_odpady {
+		IndexDomain: i;
+		Definition: p(i) >= sum((j), x(i,j));
+	}
+	Constraint ct_towar_sprzedany_mniejszy_niz_zapotrzebowanie {
+		IndexDomain: (j,k);
+		Definition: y(j,k) <= n(j,k);
+	}
+	Variable zysk {
+		Range: free;
+		Definition: sum((j,k), w(j,k)*y(j,k)) - sum((i,j), c(i,j)*x(i,j));
+	}
+	Variable y {
+		IndexDomain: (j,k);
+		Range: nonnegative;
+	}
+	Variable x {
+		IndexDomain: (i,j);
+		Range: nonnegative;
+	}
+	Parameter w {
+		IndexDomain: (j,k);
+		Range: nonnegative;
+	}
+	Parameter p {
+		IndexDomain: i;
+		Range: nonnegative;
+	}
+	Parameter e {
+		IndexDomain: (i,j);
+		Range: [0, 1];
+	}
+	Parameter n {
+		IndexDomain: (j,k);
+		Range: nonnegative;
+	}
+	Parameter c {
+		IndexDomain: (i,j);
+	}
+	Set klienci {
+		Index: k;
+		Definition: data { K1, K2, K3, K4 };
+	}
+	Set towary {
+		Index: j;
+		Definition: data { T1, T2, T3, T4 };
+	}
+	Set odpady {
+		Index: i;
+		Definition: data { O1, O2, O3 };
+	}
+	Procedure MainInitialization {
+		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
+	}
+	Procedure PostMainInitialization {
+		Comment: {
+			"Add initialization statements here that require that the libraries are already initialized properly,
+			or add statements that require the Data Management module to be initialized."
+		}
+	}
+	Procedure MainExecution {
+		Body: {
+			solve find_max_zysk;
+		}
+	}
+	Procedure PreMainTermination {
+		Body: {
+			return DataManagementExit();
+		}
+		Comment: {
+			"Add termination statements here that require all libraries to be still alive.
+			Return 1 if you allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence."
+		}
+	}
+	Procedure MainTermination {
+		Body: {
+			return 1;
+		}
+		Comment: {
+			"Add termination statements here that do not require all libraries to be still alive.
+			Return 1 to allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence.
+			It is recommended to only use the procedure PreMainTermination to cancel the termination sequence and let this procedure always return 1."
+		}
+	}
+	Section Quantities_and_Units {
+		Comment: {
+			"This section contains all the units and quantities that are added automatically by AIMMS.
+			It is recommended to declare all your quantities here."
+		}
+		Quantity SI_Time_Duration {
+			BaseUnit: s;
+			Conversions: minute->s : #-># * 60;
+			Comment: {
+				"Expresses the value for the duration of periods.
+				
+				The unit s has been added automatically because it is a required unit for AimmsWebUI.
+				
+				The unit minute has been added automatically because it is a required unit for AimmsWebUI."
+			}
+		}
+	}
+}
