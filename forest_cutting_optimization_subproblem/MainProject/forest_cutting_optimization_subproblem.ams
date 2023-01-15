@@ -1,0 +1,102 @@
+## ams_version=1.0
+
+Model Main_forest_cutting_optimization_subproblem {
+	MathematicalProgram find_max_zysk {
+		Objective: zysk;
+		Direction: Maximize;
+		Constraints: AllConstraints;
+		Variables: AllVariables;
+		Type: Automatic;
+	}
+	Constraint ct_liczba_scietych_drzew_mniejsza_niz_limit {
+		IndexDomain: j;
+		Definition: sum((i), x(i,j)) <= W;
+	}
+	Constraint ct_drzewo_sciete_tylko_raz {
+		IndexDomain: i;
+		Definition: sum((j), x(i,j)) <= 1;
+	}
+	Variable zysk {
+		Range: free;
+		Definition: sum((i,j), x(i,j) * a(i,j));
+	}
+	Variable x {
+		IndexDomain: (i,j);
+		Range: binary;
+	}
+	Parameter W {
+		Definition: {
+			3;
+		}
+	}
+	Parameter T {
+		Definition: {
+			5;
+		}
+	}
+	Parameter a {
+		IndexDomain: (i,j);
+	}
+	Set drzewa {
+		Index: i;
+		Definition: data {D1, D2, D3, D4};
+	}
+	Set lata {
+		Index: j;
+		Definition: {
+			ElementRange(1, T);
+		}
+	}
+	Procedure MainInitialization {
+		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
+	}
+	Procedure PostMainInitialization {
+		Comment: {
+			"Add initialization statements here that require that the libraries are already initialized properly,
+			or add statements that require the Data Management module to be initialized."
+		}
+	}
+	Procedure MainExecution {
+		Body: {
+			solve find_max_zysk;
+		}
+	}
+	Procedure PreMainTermination {
+		Body: {
+			return DataManagementExit();
+		}
+		Comment: {
+			"Add termination statements here that require all libraries to be still alive.
+			Return 1 if you allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence."
+		}
+	}
+	Procedure MainTermination {
+		Body: {
+			return 1;
+		}
+		Comment: {
+			"Add termination statements here that do not require all libraries to be still alive.
+			Return 1 to allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence.
+			It is recommended to only use the procedure PreMainTermination to cancel the termination sequence and let this procedure always return 1."
+		}
+	}
+	Section Quantities_and_Units {
+		Comment: {
+			"This section contains all the units and quantities that are added automatically by AIMMS.
+			It is recommended to declare all your quantities here."
+		}
+		Quantity SI_Time_Duration {
+			BaseUnit: s;
+			Conversions: minute->s : #-># * 60;
+			Comment: {
+				"Expresses the value for the duration of periods.
+				
+				The unit s has been added automatically because it is a required unit for AimmsWebUI.
+				
+				The unit minute has been added automatically because it is a required unit for AimmsWebUI."
+			}
+		}
+	}
+}
